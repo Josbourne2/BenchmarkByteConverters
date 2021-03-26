@@ -23,29 +23,18 @@ namespace BenchmarkByteConverters
 
         public ushort ReadUInt16()
         {
-            UInt16 value = BitConverter.ToUInt16(_input, (int)_position);
+            ReadOnlySpan<byte> span = new ReadOnlySpan<byte>(_input, (int)_position, 2);
+            UInt16 value = BinaryPrimitives.ReadUInt16BigEndian(span);
             _position += 2;
-            return BytesSwapper.Swap(value);
-        }
-
-        public ushort ReadUInt16_2()
-        {
-            ReadOnlySpan<byte> source = new ReadOnlySpan<byte>(_input, (int)_position, 2);
-            UInt16 adf = BinaryPrimitives.ReadUInt16BigEndian(source);
-            UInt16 value = BitConverter.ToUInt16(_input, (int)_position);
-            _position += 2;
-            return BytesSwapper.Swap(value);
+            return value;
         }
 
         public short ReadInt16()
         {
-            //TODO: nagaan of gebruik van readonlyspan op deze manier handig is
-            //https://www.stevejgordon.co.uk/an-introduction-to-optimising-code-using-span-t
-            ReadOnlySpan<byte> source = new ReadOnlySpan<byte>(_input, (int)_position, 4);
-            Int16 adf = BinaryPrimitives.ReadInt16BigEndian(source);
-            Int16 value = BitConverter.ToInt16(_input, (int)_position);
+            ReadOnlySpan<byte> span = new ReadOnlySpan<byte>(_input, (int)_position, 2);
+            Int16 value = BinaryPrimitives.ReadInt16BigEndian(span);
             _position += 2;
-            return BytesSwapper.Swap(value);
+            return value;
         }
 
         public int ReadInt32()
@@ -58,23 +47,26 @@ namespace BenchmarkByteConverters
 
         public uint ReadUInt32()
         {
-            UInt32 value = BitConverter.ToUInt32(_input, (int)_position);
+            ReadOnlySpan<byte> span = new ReadOnlySpan<byte>(_input, (int)_position, 4);
+            UInt32 value = BinaryPrimitives.ReadUInt32BigEndian(span);
             _position += 4;
-            return BytesSwapper.Swap(value);
+            return value;
         }
 
         public long ReadInt64()
         {
-            Int64 value = BitConverter.ToInt64(_input, (int)_position);
+            ReadOnlySpan<byte> span = new ReadOnlySpan<byte>(_input, (int)_position, 8);
+            Int64 value = BinaryPrimitives.ReadInt64BigEndian(span);
             _position += 8;
-            return BytesSwapper.Swap(value);
+            return value;
         }
 
         public ulong ReadUInt64()
         {
-            var value = BitConverter.ToUInt64(_input, (int)_position);
+            ReadOnlySpan<byte> span = new ReadOnlySpan<byte>(_input, (int)_position, 8);
+            UInt64 value = BinaryPrimitives.ReadUInt64BigEndian(span);
             _position += 8;
-            return BytesSwapper.Swap(value);
+            return value;
         }
 
         public byte ReadByte()

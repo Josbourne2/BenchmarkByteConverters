@@ -28,15 +28,6 @@ namespace BenchmarkByteConverters
             return BytesSwapper.Swap(value);
         }
 
-        public ushort ReadUInt16_2()
-        {
-            ReadOnlySpan<byte> source = new ReadOnlySpan<byte>(_input, (int)_position, 2);
-            UInt16 adf = BinaryPrimitives.ReadUInt16BigEndian(source);
-            UInt16 value = BitConverter.ToUInt16(_input, (int)_position);
-            _position += 2;
-            return BytesSwapper.Swap(value);
-        }
-
         public short ReadInt16()
         {
             //TODO: nagaan of gebruik van readonlyspan op deze manier handig is
